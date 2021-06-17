@@ -21,7 +21,8 @@ from models.modeling import VisionTransformer, CONFIGS
 from utils.scheduler import WarmupLinearSchedule, WarmupCosineSchedule
 from utils.data_utils import get_loader
 from utils.dist_util import get_world_size
-
+#from ptflops import get_model_complexity_info
+from flops import get_model_complexity_info
 
 logger = logging.getLogger(__name__)
 
@@ -209,8 +210,9 @@ def train(args, model):
                     torch.nn.utils.clip_grad_norm_(amp.master_params(optimizer), args.max_grad_norm)
                 else:
                     torch.nn.utils.clip_grad_norm_(model.parameters(), args.max_grad_norm)
-                scheduler.step()
+                
                 optimizer.step()
+                scheduler.step()
                 optimizer.zero_grad()
                 global_step += 1
 
@@ -219,7 +221,7 @@ def train(args, model):
                 )
                 if args.local_rank in [-1, 0]:
                     writer.add_scalar("train/loss", scalar_value=losses.val, global_step=global_step)
-                    writer.add_scalar("train/lr", scalar_value=scheduler.get_lr()[0], global_step=global_step)
+                    writer.add_scalar("train/lr", scalar_value=scheduler.get_last_lr()[0], global_step=global_step)
                 if global_step % args.eval_every == 0 and args.local_rank in [-1, 0]:
                     accuracy = valid(args, model, writer, test_loader, global_step)
                     if best_acc < accuracy:
@@ -320,9 +322,14 @@ def main():
     # Model & Tokenizer Setup
     args, model = setup(args)
 
+    #flops, params = get_model_complexity_info(model, (3, 224, 224), as_strings = True, print_per_layer_stat = True)
+    #print('FLOPS: {}'.format(flops))
+    #print('Params: ' + params)
+
     # Training
     train(args, model)
 
 
 if __name__ == "__main__":
+
     main()
