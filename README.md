@@ -17,7 +17,7 @@ wget https://storage.googleapis.com/vit_models/imagenet21k+imagenet2012/{MODEL_N
 
 ```
 
-### 2. data Source
+### 2. Download data Source
 ```
 https://www.cs.toronto.edu/~kriz/cifar.html
 ```
@@ -35,7 +35,10 @@ Also can use [Automatic Mixed Precision(Amp)](https://nvidia.github.io/apex/amp.
 python train.py --name cifar10-100_500 --dataset cifar10 --model_type R50-ViT-B_16 --pretrained_dir checkpoint/R50+ViT-B_16.npz --fp16 --fp16_opt_level O2
 ```
 
-
+### 4. model weights
+```
+https://pan.baidu.com/s/1V1FQTUQ3fxGWT0BpY-0Shg(c5wa)
+```
 
 ## Reference
 * [Google ViT](https://github.com/google-research/vision_transformer)
