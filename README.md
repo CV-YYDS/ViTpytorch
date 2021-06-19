@@ -37,7 +37,7 @@ python train.py --name cifar10-100_500 --dataset cifar10 --model_type R50-ViT-B_
 
 ### 4. model weights
 ```
-https://pan.baidu.com/s/1V1FQTUQ3fxGWT0BpY-0Shg(c5wa)
+https://pan.baidu.com/s/1V1FQTUQ3fxGWT0BpY-0Shg(password:c5wa)
 ```
 
 ## Reference
